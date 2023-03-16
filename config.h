@@ -132,10 +132,10 @@ static Key keys[] = {
   	{ MODKEY,              XK_k,       focusdir,          {.i = 2 } },  // 切换聚焦窗口
   	{ MODKEY,              XK_l,       focusdir,          {.i = 3 } },  // 切换聚焦窗口
 //-----------------------------------------------------------------------------
-    { MODKEY|ShiftMask,    XK_h,       ExchangeClient,    {.i = 0} },   // 移动窗口
-    { MODKEY|ShiftMask,    XK_j,       ExchangeClient,    {.i = 1 } },  // 移动窗口
-    { MODKEY|ShiftMask,    XK_k,       ExchangeClient,    {.i = 2 } },  // 移动窗口
-    { MODKEY|ShiftMask,    XK_l,       ExchangeClient,    {.i = 3} },   // 移动窗口
+    { MODKEY|ShiftMask,    XK_h,       exchange_client,    {.i = 0} },   // 移动窗口
+    { MODKEY|ShiftMask,    XK_j,       exchange_client,    {.i = 1 } },  // 移动窗口
+    { MODKEY|ShiftMask,    XK_k,       exchange_client,    {.i = 2 } },  // 移动窗口
+    { MODKEY|ShiftMask,    XK_l,       exchange_client,    {.i = 3} },   // 移动窗口
 //-----------------------------------------------------------------------------
 
     { MODKEY,              XK_Tab,          focusstack,       {.i = +1} },               /* super tab          |  本tag内切换聚焦窗口 */
