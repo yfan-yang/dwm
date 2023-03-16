@@ -40,7 +40,7 @@ call_menu() {
         " 关机") poweroff ;;
         " 重启") reboot ;;
         " 休眠") systemctl hibernate ;;
-        " 锁定") ~/scripts/blurlock.sh ;;
+        " 锁定") ~/.dwm/scripts/blurlock.sh ;;
     esac
 }
 
