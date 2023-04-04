@@ -57,12 +57,10 @@ static const char *tags[] = {
     "", // tag:0  key:1  desc:terminal1
     "", // tag:1  key:2  desc:terminal2
     "", // tag:2  key:3  desc:terminal3
-    "󰕧", // tag:4  key:9  desc:obs
-    "", // tag:5  key:c  desc:chrome
-    "", // tag:6  key:m  desc:music
-    "ﬄ", // tag:7  key:0  desc:qq
-    "﬐", // tag:8  key:w  desc:wechat
-    "", // tag:9  key:l  desc:wxwork
+    "󰇩", // tag:3  key:e  desc:edges
+    "", // tag:4  key:c  desc:chrome
+    "󰨞", // tag:5  key:v  desc:vscode
+    "ﬄ", // tag:6  key:0  desc:qq
 };
 
 /* 自定义窗口显示规则 */
@@ -204,11 +202,13 @@ static Key keys[] = {
     /* super key : 跳转到对应tag (可附加一条命令 若目标目录无窗口，则执行该命令) */
     /* super shift key : 将聚焦窗口移动到对应tag */
     /* key tag cmd */
-    TAGKEYS(XK_1, 0, 0)
-    TAGKEYS(XK_2, 1, 0)
-    TAGKEYS(XK_e, 2, "microsoft-edge-stable")
-    TAGKEYS(XK_0, 3, "qq")
+    TAGKEYS(XK_0, 0, 0)
+    TAGKEYS(XK_1, 1, 0)
+    TAGKEYS(XK_2, 2, 0)
+    TAGKEYS(XK_e, 3, "microsoft-edge-stable")
     TAGKEYS(XK_c, 4, "google-chrome-stable")
+    TAGKEYS(XK_v, 5, "code")
+    TAGKEYS(XK_t, 6, "qq")
 };
 static Button buttons[] = {
     /* click               event mask       button            function       argument  */
