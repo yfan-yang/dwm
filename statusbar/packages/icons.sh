@@ -20,7 +20,7 @@ with_bluetooth() {
 update() {
     icons=("")
     with_v2raya
-    with_bluetooth
+    # with_bluetooth
 
     text=" ${icons[@]} "
 
@@ -32,15 +32,15 @@ notify() {
     texts=""
     [ "$(ps aux | grep -v grep | grep 'v2raya')" ] && texts="$texts\n v2raya 已启动"
     [ "$(bluetoothctl info 88:C9:E8:14:2A:72 | grep 'Connected: yes')" ] && texts="$texts\n WH-1000XM4 已链接"
-    [ "$texts" != "" ] && notify-send " Info" "$texts" -r 9527
+    [ "$texts" != "" ] && notify-send " Info" $texts" -r 9527
 }
 
 call_menu() {
-    case $(echo -e ' 关机\n 重启\n 休眠\n 锁定' | rofi -dmenu -window-title power -theme ~/scripts/config/rofi.rasi) in
+    case $(echo -e ' 关机\n 重启\n 休眠\n 锁定' | rofi -dmenu -window-title power) in
         " 关机") poweroff ;;
         " 重启") reboot ;;
         " 休眠") systemctl hibernate ;;
-        " 锁定") gnome-screensaver-command -l ;;
+        " 锁定") ~/.dwm/scripts/blurlock.sh ;;
     esac
 }
 

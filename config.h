@@ -39,7 +39,7 @@ static const unsigned int alphas[][3]    = {          /* 透明度设置 ColFg, 
     [SchemeSelGlobal] = { OPAQUE, baralpha, borderalpha },
     [SchemeNormTag] = { OPAQUE, baralpha, borderalpha }, 
     [SchemeSelTag] = { OPAQUE, baralpha, borderalpha },
-    [SchemeBarEmpty] = { NULL, 0xa0a, NULL },
+    [SchemeBarEmpty] = { NULL, 0x11, NULL },
     [SchemeStatusText] = { OPAQUE, 0x88, NULL },
 };
 
@@ -126,18 +126,6 @@ static Key keys[] = {
     /* modifier            key              function          argument */
     { MODKEY,              XK_equal,        togglesystray,    {0} },                     /* super +            |  切换 托盘栏显示状态 */
 
-//-----------------------------------------------------------------------------
-  	{ MODKEY,              XK_h,       focusdir,          {.i = 0 } },  // 切换聚焦窗口
-  	{ MODKEY,              XK_j,       focusdir,          {.i = 1 } },  // 切换聚焦窗口
-  	{ MODKEY,              XK_k,       focusdir,          {.i = 2 } },  // 切换聚焦窗口
-  	{ MODKEY,              XK_l,       focusdir,          {.i = 3 } },  // 切换聚焦窗口
-//-----------------------------------------------------------------------------
-    { MODKEY|ShiftMask,    XK_h,       exchange_client,    {.i = 0} },   // 移动窗口
-    { MODKEY|ShiftMask,    XK_j,       exchange_client,    {.i = 1 } },  // 移动窗口
-    { MODKEY|ShiftMask,    XK_k,       exchange_client,    {.i = 2 } },  // 移动窗口
-    { MODKEY|ShiftMask,    XK_l,       exchange_client,    {.i = 3} },   // 移动窗口
-//-----------------------------------------------------------------------------
-
     { MODKEY,              XK_Tab,          focusstack,       {.i = +1} },               /* super tab          |  本tag内切换聚焦窗口 */
     { MODKEY|ShiftMask,    XK_Tab,          focusstack,       {.i = -1} },               /* super shift tab    |  本tag内切换聚焦窗口 */
     { MODKEY,              XK_Up,           focusstack,       {.i = -1} },               /* super up           |  本tag内切换聚焦窗口 */
@@ -153,8 +141,8 @@ static Key keys[] = {
     { MODKEY,              XK_comma,        setmfact,         {.f = -0.05} },            /* super ,            |  缩小主工作区 */
     { MODKEY,              XK_period,       setmfact,         {.f = +0.05} },            /* super .            |  放大主工作区 */
 
-    // { MODKEY,              XK_h,            hidewin,          {0} },                     /* super h            |  隐藏 窗口 */
-    // { MODKEY|ShiftMask,    XK_h,            restorewin,       {0} },                     /* super shift h      |  取消隐藏 窗口 */
+    { MODKEY,              XK_i,            hidewin,          {0} },                     /* super i            |  隐藏 窗口 */
+    { MODKEY|ShiftMask,    XK_i,            restorewin,       {0} },                     /* super shift i      |  取消隐藏 窗口 */
 
     { MODKEY|ShiftMask,    XK_Return,       zoom,             {0} },                     /* super shift enter  |  将当前聚焦窗口置为主窗口 */
 
@@ -173,8 +161,8 @@ static Key keys[] = {
     { MODKEY|ControlMask,  XK_q,            forcekillclient,  {0} },                     /* super ctrl q       |  强制关闭窗口(处理某些情况下无法销毁的窗口) */
     { MODKEY|ControlMask,  XK_F12,          quit,             {0} },                     /* super ctrl f12     |  退出dwm */
 
-	{ MODKEY|ShiftMask,    XK_space,        selectlayout,     {.v = &layouts[1]} },  /* super shift space  |  切换到网格布局 */
-	{ MODKEY,              XK_o,            showonlyorall,    {0} },                 /* super o            |  切换 只显示一个窗口 / 全部显示 */
+	{ MODKEY|ShiftMask,    XK_space,        selectlayout,     {.v = &layouts[1]} },      /* super shift space  |  切换到网格布局 */
+	{ MODKEY,              XK_o,            showonlyorall,    {0} },                     /* super o            |  切换 只显示一个窗口 / 全部显示 */
 
     { MODKEY|ControlMask,  XK_equal,        setgap,           {.i = -6} },               /* super ctrl +       |  窗口增大 */
     { MODKEY|ControlMask,  XK_minus,        setgap,           {.i = +6} },               /* super ctrl -       |  窗口减小 */
@@ -190,32 +178,37 @@ static Key keys[] = {
     { MODKEY|Mod1Mask,     XK_Left,         resizewin,        {.ui = H_REDUCE} },        /* super alt left     |  调整窗口 */
     { MODKEY|Mod1Mask,     XK_Right,        resizewin,        {.ui = H_EXPAND} },        /* super alt right    |  调整窗口 */
 
+  	{ MODKEY,              XK_k,            focusdir,         {.i = UP } },              /* super k            | 二维聚焦窗口 */
+  	{ MODKEY,              XK_j,            focusdir,         {.i = DOWN } },            /* super j            | 二维聚焦窗口 */
+  	{ MODKEY,              XK_h,            focusdir,         {.i = LEFT } },            /* super h            | 二维聚焦窗口 */
+  	{ MODKEY,              XK_l,            focusdir,         {.i = RIGHT } },           /* super l            | 二维聚焦窗口 */
+    { MODKEY|ShiftMask,    XK_k,            exchange_client,  {.i = UP } },              /* super shift k      | 二维交换窗口 (仅平铺) */
+    { MODKEY|ShiftMask,    XK_j,            exchange_client,  {.i = DOWN } },            /* super shift j      | 二维交换窗口 (仅平铺) */
+    { MODKEY|ShiftMask,    XK_h,            exchange_client,  {.i = LEFT} },             /* super shift h      | 二维交换窗口 (仅平铺) */
+    { MODKEY|ShiftMask,    XK_l,            exchange_client,  {.i = RIGHT } },           /* super shift l      | 二维交换窗口 (仅平铺) */
+
     /* spawn + SHCMD 执行对应命令(已下部分建议完全自己重新定义) */
     { MODKEY,              XK_s,      togglescratch, SHCMD("tabbed -n scratchpad -c -r 2 st -w ''") },          /* super s          | 打开scratch终端        */
     { MODKEY,              XK_Return, spawn, SHCMD("tabbed -n st -C tabbed -c -r 2 st -w ''") },                /* super enter      | 打开st终端             */
-    { MODKEY,              XK_minus,  spawn, SHCMD("tabbed -n st -C FG -c -r 2 st -w ''") },                                               /* super +          | 打开全局st终端         */
+    { MODKEY,              XK_minus,  spawn, SHCMD("tabbed -n st -C FG -c -r 2 st -w ''") },                    /* super +          | 打开全局st终端         */
     { MODKEY,              XK_space,  spawn, SHCMD("tabbed -n st -C float -c -r 2 st -w ''") },                 /* super space      | 打开浮动st终端         */
-    { MODKEY,              XK_F1,     spawn, SHCMD("pcmanfm") },                                                /* super F1         | 打开pcmanfm            */
-    { MODKEY,              XK_d,      spawn, SHCMD("~/.dwm/scripts/call_rofi.sh run") },                             /* super d          | rofi: 执行run          */
-    { MODKEY|ShiftMask,    XK_d,      spawn, SHCMD("~/.dwm/scripts/call_rofi.sh drun") },                            /* super shift d    | rofi: 执行drun         */
-    { MODKEY,              XK_p,      spawn, SHCMD("~/.dwm/scripts/call_rofi.sh custom") },                          /* super p          | rofi: 执行自定义脚本   */
-    { MODKEY|ShiftMask,    XK_p,      spawn, SHCMD("~/.dwm/scripts/call_rofi.sh window") },                          /* super shift p    | rofi: 执行window       */
-    { MODKEY,              XK_k,      spawn, SHCMD("~/.dwm/scripts/blurlock.sh") },                                  /* super k          | 锁定屏幕               */
-    { MODKEY|ShiftMask,    XK_Up,     spawn, SHCMD("~/.dwm/scripts/set_vol.sh up") },                                /* super shift up   | 音量加                 */
-    { MODKEY|ShiftMask,    XK_Down,   spawn, SHCMD("~/.dwm/scripts/set_vol.sh down") },                              /* super shift down | 音量减                 */
-    { MODKEY|ShiftMask,    XK_a,      spawn, SHCMD("flameshot gui -c -p ~/Pictures/screenshots") },             /* super shift a    | 截图                   */
-    // { MODKEY|ShiftMask,    XK_k,      spawn, SHCMD("~/.dwm/scripts/screenkey.sh") },                                 /* super shift k    | 打开键盘输入显示       */
+    { MODKEY,              XK_n,      spawn, SHCMD("killall nautilus || nautilus") },                           /* super n         | 打开/关闭nautilus       */
+    { MODKEY,              XK_d,      spawn, SHCMD("rofi -show run") },                                         /* super d          | rofi: 执行run          */
+    { MODKEY,              XK_p,      spawn, SHCMD("$DWM/DEF/rofi.sh") },                                       /* super p          | rofi: 执行自定义脚本   */
+    { MODKEY,              XK_F9,     spawn, SHCMD("$DWM/DEF/blurlock.sh") },                                   /* super F9          | 锁定屏幕               */
+    { MODKEY|ShiftMask,    XK_Up,     spawn, SHCMD("$DWM/DEF/set_vol.sh up") },                                 /* super shift up   | 音量加                 */
+    { MODKEY|ShiftMask,    XK_Down,   spawn, SHCMD("$DWM/DEF/set_vol.sh down") },                               /* super shift down | 音量减                 */
+    { MODKEY|ShiftMask,    XK_a,      spawn, SHCMD("flameshot gui -c -p ~/图片/screenshots") },                  /* super shift a    | 截图                   */
     { MODKEY|ShiftMask,    XK_q,      spawn, SHCMD("kill -9 $(xprop | grep _NET_WM_PID | awk '{print $3}')") }, /* super shift q    | 选中某个窗口并强制kill */
-    { ShiftMask|ControlMask, XK_c,    spawn, SHCMD("xclip -o | xclip -selection c") },                          /* super shift c    | 进阶复制               */
 
     /* super key : 跳转到对应tag (可附加一条命令 若目标目录无窗口，则执行该命令) */
     /* super shift key : 将聚焦窗口移动到对应tag */
     /* key tag cmd */
     TAGKEYS(XK_1, 0, 0)
-    TAGKEYS(XK_n, 1, "nautilus")
-    TAGKEYS(XK_e, 7, "microsoft-edge-stable")
+    TAGKEYS(XK_2, 1, 0)
+    TAGKEYS(XK_e, 2, "microsoft-edge-stable")
+    TAGKEYS(XK_0, 3, "qq")
     TAGKEYS(XK_c, 4, "google-chrome-stable")
-    TAGKEYS(XK_0, 6, "qq")
 };
 static Button buttons[] = {
     /* click               event mask       button            function       argument  */
