@@ -56,11 +56,12 @@ static const char scratchpadname[] = "scratchpad";
 static const char *tags[] = { 
     "", // tag:0  key:1  desc:terminal1
     "", // tag:1  key:2  desc:terminal2
-    "", // tag:2  key:3  desc:terminal3
+    "󱧶", // tag:2  key:n  desc:nautilus
     "󰇩", // tag:3  key:e  desc:edges
     "", // tag:4  key:c  desc:chrome
     "󰨞", // tag:5  key:v  desc:vscode
     "ﬄ", // tag:6  key:0  desc:qq
+    "󰢹", // tag:7  key:s  desc:sunloginclient
 };
 
 /* 自定义窗口显示规则 */
@@ -186,11 +187,9 @@ static Key keys[] = {
     { MODKEY|ShiftMask,    XK_l,            exchange_client,  {.i = RIGHT } },           /* super shift l      | 二维交换窗口 (仅平铺) */
 
     /* spawn + SHCMD 执行对应命令(已下部分建议完全自己重新定义) */
-    { MODKEY,              XK_s,      togglescratch, SHCMD("tabbed -n scratchpad -c -r 2 st -w ''") },          /* super s          | 打开scratch终端        */
     { MODKEY,              XK_Return, spawn, SHCMD("tabbed -n st -C tabbed -c -r 2 st -w ''") },                /* super enter      | 打开st终端             */
     { MODKEY,              XK_minus,  spawn, SHCMD("tabbed -n st -C FG -c -r 2 st -w ''") },                    /* super +          | 打开全局st终端         */
     { MODKEY,              XK_space,  spawn, SHCMD("tabbed -n st -C float -c -r 2 st -w ''") },                 /* super space      | 打开浮动st终端         */
-    { MODKEY,              XK_n,      spawn, SHCMD("killall nautilus || nautilus") },                           /* super n         | 打开/关闭nautilus       */
     { MODKEY,              XK_d,      spawn, SHCMD("rofi -show run") },                                         /* super d          | rofi: 执行run          */
     { MODKEY,              XK_p,      spawn, SHCMD("$DWM/DEF/rofi.sh") },                                       /* super p          | rofi: 执行自定义脚本   */
     { MODKEY,              XK_F9,     spawn, SHCMD("$DWM/DEF/blurlock.sh") },                                   /* super F9          | 锁定屏幕               */
@@ -204,11 +203,12 @@ static Key keys[] = {
     /* key tag cmd */
     TAGKEYS(XK_0, 0, 0)
     TAGKEYS(XK_1, 1, 0)
-    TAGKEYS(XK_2, 2, 0)
+    TAGKEYS(XK_n, 2, "nautilus")
     TAGKEYS(XK_e, 3, "microsoft-edge-stable")
     TAGKEYS(XK_c, 4, "google-chrome-stable")
     TAGKEYS(XK_v, 5, "code")
     TAGKEYS(XK_t, 6, "qq")
+    TAGKEYS(XK_s, 7, "sunloginclient")
 };
 static Button buttons[] = {
     /* click               event mask       button            function       argument  */
