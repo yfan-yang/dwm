@@ -7,34 +7,35 @@ _thisdir=$(cd $(dirname $0);pwd)
 
 settings() {
     [ $1 ] && sleep $1
-    xset -b                                   # 关闭蜂鸣器
-    syndaemon -i 1 -t -K -R -d                # 设置使用键盘时触控板短暂失效
-    xinput set-prop 11 333 -29 -29            # 设置触摸板为自然滚动
+    xset -b                                     # 关闭蜂鸣器
+    syndaemon -i 1 -t -K -R -d                  # 设置使用键盘时触控板短暂失效
+    touchpad_id=$(xinput | grep "Touchpad" | sed 's/\t/\n/g' | grep "id" | sed 's/=/\n/g' | sed '1d') # 获取触摸板id
+    scrolling_distance_id=$(xinput --list-props ${touchpad_id} | grep "Synaptics Scrolling Distance" | sed 's/(/\n/g' | sed 's/)/\n/g' | sed -n '2p') # 获取滚动位移id
+    xinput set-prop ${touchpad_id} ${scrolling_distance_id} -29 -29 # 设置触摸板为自然滚动
 }
 
 daemons() {
     [ $1 ] && sleep $1
-    $_thisdir/statusbar/statusbar.sh cron &   # 开启状态栏定时更新
-    xss-lock -- ~/.dwm/scripts/blurlock.sh &       # 开启自动锁屏程序
-    ibus &                                  # 开启输入法
+    $_thisdir/statusbar/statusbar.sh cron &     # 开启状态栏定时更新
+    xss-lock -- ~/.dwm/scripts/blurlock.sh &    # 开启自动锁屏程序
+    ibus &                                      # 开启输入法
     # lemonade server &                         # 开启lemonade 远程剪切板支持
-    flameshot &                               # 截图要跑一个程序在后台 不然无法将截图保存到剪贴板
-    dunst -conf ~/.dwm/scripts/config/dunst.conf & # 开启通知server
+    flameshot &                                 # 截图要跑一个程序在后台 不然无法将截图保存到剪贴板
+    dunst -conf ~/.dwm/scripts/config/dunst.conf &                  # 开启通知server
     picom --experimental-backends --config ~/.dwm/scripts/config/picom.conf >> /dev/null 2>&1 & # 开启picom
 }
 
 cron() {
     [ $1 ] && sleep $1
-    # feh --randomize --bg-fill ~/图片/壁纸/*.png
-    feh --bg-fill ~/图片/壁纸/65.png
+    feh --randomize --bg-fill ~/图片/壁纸/*.png
     let i=10
     while true; do
-        # [ $((i % 10)) -eq 0 ] && ~/.dwm/scripts/set_screen.sh check # 每10秒检查显示器状态 以此自动设置显示器
-        [ $((i % 300)) -eq 0 ] && feh --randomize --bg-fill ~/图片/壁纸/*.png # 每300秒更新壁纸
+        # [ $((i % 10)) -eq 0 ] && ~/.dwm/scripts/set_screen.sh check   # 每10秒检查显示器状态 以此自动设置显示器
+        [ $((i % 300)) -eq 0 ] && feh --randomize --bg-fill ~/图片/壁纸/*.png   # 每300秒更新壁纸
         sleep 10; let i+=10
     done
 }
 
-settings 1 &                                  # 初始化设置项
-daemons 3 &                                   # 后台程序项
-cron 5 &                                      # 定时任务项
+settings 1 &                                    # 初始化设置项
+daemons 3 &                                     # 后台程序项
+cron 5 &                                        # 定时任务项
